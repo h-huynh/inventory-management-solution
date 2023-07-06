@@ -1,0 +1,14 @@
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/inventory_management
+        username: postgres
+        password: 1panda
+    output:
+        ansi:
+            enabled: ALWAYS
+
+# set logging level - default is info9
+logging:
+    level:
+        com:
+            skillstorm: debug 
