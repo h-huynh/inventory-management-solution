@@ -2,9 +2,9 @@
 
 
 -- WARNING: this will drop all the tables, comment out if needed
+drop table if exists INVENTORY;
 drop table if exists WAREHOUSES;
 drop table if exists ITEMS;
-drop table if exists INVENTORY;
 
 -- Create the Warehouses table
 CREATE TABLE WAREHOUSES (

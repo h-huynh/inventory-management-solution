@@ -25,20 +25,21 @@ public class InventoryService {
         return inventoryRepository.findAll();
     }
 
-    public Inventory findInventoryByWarehouseId(int warehouseId) {
-        Optional<Inventory> inventory = inventoryRepository.findByInventoryId_WarehouseId(warehouseId);
-        if(inventory.isPresent()) {        
-            return inventory.get();         
-        }
-        return null;
+    public List<Inventory> findInventoryByWarehouseId(int warehouseId) {
+        return inventoryRepository.findAllByInventoryId_WarehouseId(warehouseId);
     }
 
-    public Inventory findInventoryByItemId(int itemId) {
-        Optional<Inventory> inventory = inventoryRepository.findByInventoryId_ItemId(itemId);
-        if(inventory.isPresent()) {        
-            return inventory.get();         
+    public List<Inventory> findInventoryByItemId(int itemId) {
+        return inventoryRepository.findAllByInventoryId_ItemId(itemId);
+    }
+
+    public int getTotalQuantityByWarehouseId(int warehouseId) {
+        List<Inventory> inventoryList = inventoryRepository.findAllByInventoryId_WarehouseId(warehouseId);
+        int totalQuantity = 0;
+        for (Inventory inventory : inventoryList) {
+            totalQuantity += inventory.getQuantity();
         }
-        return null;
+        return totalQuantity;
     }
 
     // for searching a specific warehouseId and itemID

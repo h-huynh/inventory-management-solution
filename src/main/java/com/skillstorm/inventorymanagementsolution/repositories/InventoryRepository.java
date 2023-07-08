@@ -1,5 +1,6 @@
 package com.skillstorm.inventorymanagementsolution.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +19,12 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 
     // to search for a specific item id in the composite key
     Optional<Inventory> findByInventoryId_ItemId(int itemId);
+
+    // to search for all inventory by a certain warehouseId
+    List<Inventory> findAllByInventoryId_WarehouseId(int warehouseId);
+
+    // to search for all inventory by a certain itemId
+    List<Inventory> findAllByInventoryId_ItemId(int warehouseId);
+    
 
 }
