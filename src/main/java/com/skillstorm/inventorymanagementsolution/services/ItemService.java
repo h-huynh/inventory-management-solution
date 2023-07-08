@@ -16,8 +16,8 @@ public class ItemService {
     ItemRepository itemRepository;
 
     // CREATE/UPDATE Items
-    public Item saveItem(Item Item) {
-        return itemRepository.save(Item);
+    public Item saveItem(Item item) {
+        return itemRepository.save(item);
     }
 
     // READ Items
