@@ -11,7 +11,7 @@ import com.skillstorm.inventorymanagementsolution.models.Inventory;
 public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 
     // a custom method to find by both warehouseId and itemId
-    Optional<Inventory> findByInventoryId_WarehouseIdAndInventoryId_ItemId(int warehouseId, int itemId);
+    Optional<Inventory> findByInventoryId_WarehouseIdAndInventoryId(int warehouseId, int itemId);
 
     // to search for a specific warehouse id in the composite key
     Optional<Inventory> findByInventoryId_WarehouseId(int warehouseId);

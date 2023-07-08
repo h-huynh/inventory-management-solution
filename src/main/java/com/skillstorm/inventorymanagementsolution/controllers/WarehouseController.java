@@ -22,6 +22,7 @@ import com.skillstorm.inventorymanagementsolution.services.WarehouseService;
 @RequestMapping("/warehouses")
 @CrossOrigin
 public class WarehouseController {
+    
     @Autowired
     WarehouseService warehouseService;
 

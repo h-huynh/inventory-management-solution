@@ -42,8 +42,8 @@ public class InventoryService {
     }
 
     // for searching a specific warehouseId and itemID
-    public Inventory findInventoryByWarehouseIdAndItemID(int warehouseId, int itemId) {
-        Optional<Inventory> inventory = inventoryRepository.findByInventoryId_WarehouseIdAndInventoryId_ItemId(warehouseId, itemId);
+    public Inventory findInventoryByWarehouseIdAndItemId(int warehouseId, int itemId) {
+        Optional<Inventory> inventory = inventoryRepository.findByInventoryId_WarehouseIdAndInventoryId(warehouseId, itemId);
         if(inventory.isPresent()) {        
             return inventory.get();         
         }

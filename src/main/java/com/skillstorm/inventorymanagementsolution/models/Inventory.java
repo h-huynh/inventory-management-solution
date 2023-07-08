@@ -5,6 +5,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
@@ -12,13 +13,15 @@ import javax.persistence.Table;
 public class Inventory {
 
     @EmbeddedId
-    private InventoryId id;
+    private InventoryId inventoryId;
 
     @ManyToOne
+    @MapsId("warehouseId") // Maps the warehouseId attribute of the embedded id
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
 
     @ManyToOne
+    @MapsId("itemId") // Maps the itemId attribute of the embedded id
     @JoinColumn(name = "item_id")
     private Item item;
 
@@ -28,19 +31,19 @@ public class Inventory {
     public Inventory() {
     }
 
-    public Inventory(InventoryId id, Warehouse warehouse, Item item, int quantity) {
-        this.id = id;
+    public Inventory(InventoryId inventoryId, Warehouse warehouse, Item item, int quantity) {
+        this.inventoryId = inventoryId;
         this.warehouse = warehouse;
         this.item = item;
         this.quantity = quantity;
     }
 
-    public InventoryId getId() {
-        return id;
+    public InventoryId getInventoryId() {
+        return inventoryId;
     }
 
-    public void setId(InventoryId id) {
-        this.id = id;
+    public void setInventoryId(InventoryId inventoryId) {
+        this.inventoryId = inventoryId;
     }
 
     public Warehouse getWarehouse() {
@@ -71,7 +74,7 @@ public class Inventory {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((inventoryId == null) ? 0 : inventoryId.hashCode());
         result = prime * result + ((warehouse == null) ? 0 : warehouse.hashCode());
         result = prime * result + ((item == null) ? 0 : item.hashCode());
         result = prime * result + quantity;
@@ -87,10 +90,10 @@ public class Inventory {
         if (getClass() != obj.getClass())
             return false;
         Inventory other = (Inventory) obj;
-        if (id == null) {
-            if (other.id != null)
+        if (inventoryId == null) {
+            if (other.inventoryId != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!inventoryId.equals(other.inventoryId))
             return false;
         if (warehouse == null) {
             if (other.warehouse != null)
@@ -109,6 +112,6 @@ public class Inventory {
 
     @Override
     public String toString() {
-        return "Inventory [id=" + id + ", warehouse=" + warehouse + ", item=" + item + ", quantity=" + quantity + "]";
+        return "Inventory [inventoryId=" + inventoryId + ", warehouse=" + warehouse + ", item=" + item + ", quantity=" + quantity + "]";
     }
 }
