@@ -22,7 +22,7 @@ import com.skillstorm.inventorymanagementsolution.services.WarehouseService;
 @RequestMapping("/warehouses")
 @CrossOrigin
 public class WarehouseController {
-    
+
     @Autowired
     WarehouseService warehouseService;
 
@@ -32,7 +32,7 @@ public class WarehouseController {
         return new ResponseEntity<>(warehouses, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/warehouse/{id}")
     public ResponseEntity<Warehouse> getWarehouseById(@PathVariable int id) {
         Warehouse warehouse = warehouseService.findWarehouseById(id);
         if (warehouse != null) {
@@ -42,13 +42,13 @@ public class WarehouseController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/warehouse")
     public ResponseEntity<Warehouse> createWarehouse(@RequestBody Warehouse warehouse) {
         Warehouse createdWarehouse = warehouseService.saveWarehouse(warehouse);
         return new ResponseEntity<>(createdWarehouse, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/warehouse/{id}")
     public ResponseEntity<Warehouse> updateWarehouse(@PathVariable int id, @RequestBody Warehouse warehouse) {
         Warehouse existingWarehouse = warehouseService.findWarehouseById(id);
         if (existingWarehouse != null) {
@@ -60,7 +60,7 @@ public class WarehouseController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/warehouse/{id}")
     public ResponseEntity<Void> deleteWarehouse(@PathVariable int id) {
         Warehouse existingWarehouse = warehouseService.findWarehouseById(id);
         if (existingWarehouse != null) {
