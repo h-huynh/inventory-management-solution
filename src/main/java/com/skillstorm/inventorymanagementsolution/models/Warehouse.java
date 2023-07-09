@@ -21,7 +21,7 @@ public class Warehouse {
     private String name;
 
     @Min(10)
-    @Column(name = "maxiumum_capacity")
+    @Column(name = "maximum_capacity")
     private int maximumCapacity;
 
     public Warehouse() {
