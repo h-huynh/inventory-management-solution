@@ -10,6 +10,7 @@ drop table if exists ITEMS;
 CREATE TABLE WAREHOUSES (
   warehouse_id SERIAL PRIMARY KEY,
   warehouse_name VARCHAR(255) NOT NULL,
+  warehouse_location VARCHAR(255) NOT NULL,
   maximum_capacity INTEGER NOT NULL
 );
 

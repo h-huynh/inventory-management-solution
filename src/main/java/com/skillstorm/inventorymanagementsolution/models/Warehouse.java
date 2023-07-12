@@ -20,6 +20,9 @@ public class Warehouse {
     @Column(name = "warehouse_name")
     private String name;
 
+    @Column(name = "warehouse_location")
+    private String location;
+
     @Min(10)
     @Column(name = "maximum_capacity")
     private int maximumCapacity;
@@ -27,33 +30,43 @@ public class Warehouse {
     public Warehouse() {
     }
 
-    public Warehouse(String name, int maximumCapacity) {
+    public Warehouse(String name, String location, int maximumCapacity) {
         this.name = name;
+        this.location = location;
         this.maximumCapacity = maximumCapacity;
     }
 
-    public Warehouse(int id, String name, int maximumCapacity) {
+    public Warehouse(int id, String name, String location, int maximumCapacity) {
         this.id = id;
         this.name = name;
+        this.location = location;
         this.maximumCapacity = maximumCapacity;
     }
-
+    
     public int getId() {
         return id;
     }
-
+    
     public void setId(int id) {
         this.id = id;
     }
-
+    
     public String getName() {
         return name;
     }
-
+    
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    
     public int getMaximumCapacity() {
         return maximumCapacity;
     }
@@ -68,6 +81,7 @@ public class Warehouse {
         int result = 1;
         result = prime * result + id;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((location == null) ? 0 : location.hashCode());
         result = prime * result + maximumCapacity;
         return result;
     }
@@ -88,15 +102,13 @@ public class Warehouse {
                 return false;
         } else if (!name.equals(other.name))
             return false;
+        if (location == null) {
+            if (other.location != null)
+                return false;
+        } else if (!location.equals(other.location))
+            return false;
         if (maximumCapacity != other.maximumCapacity)
             return false;
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "Warehouse [id=" + id + ", name=" + name + ", maximumCapacity=" + maximumCapacity + "]";
-    }
-
-    
 }
