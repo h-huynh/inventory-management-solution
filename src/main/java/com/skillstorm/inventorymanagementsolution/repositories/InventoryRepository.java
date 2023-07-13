@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.skillstorm.inventorymanagementsolution.models.Inventory;
+import com.skillstorm.inventorymanagementsolution.models.InventoryId;
 
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
@@ -25,6 +26,9 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 
     // to search for all inventory by a certain itemId
     List<Inventory> findAllByInventoryId_ItemId(int warehouseId);
+
+    // to search for based on inventoryId
+    Optional<Inventory> findByInventoryId(InventoryId inventoryId);
     
 
 }

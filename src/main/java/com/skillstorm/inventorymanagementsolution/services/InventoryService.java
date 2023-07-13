@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skillstorm.inventorymanagementsolution.models.Inventory;
+import com.skillstorm.inventorymanagementsolution.models.InventoryId;
 import com.skillstorm.inventorymanagementsolution.repositories.InventoryRepository;
 
 @Service
@@ -44,8 +45,9 @@ public class InventoryService {
 
     // for searching a specific warehouseId and itemID
     public Inventory findInventoryByWarehouseIdAndItemId(int warehouseId, int itemId) {
-        Optional<Inventory> inventory = inventoryRepository.findByInventoryId_WarehouseIdAndInventoryId(warehouseId, itemId);
-        if(inventory.isPresent()) {        
+        InventoryId inventoryId = new InventoryId(warehouseId, itemId);
+        Optional<Inventory> inventory = inventoryRepository.findByInventoryId(inventoryId);
+        if (inventory.isPresent()) {        
             return inventory.get();         
         }
         return null;
