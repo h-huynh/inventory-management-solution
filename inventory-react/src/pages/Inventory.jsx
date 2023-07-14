@@ -20,9 +20,15 @@ export default function Inventory() {
   }, []);
 
   function handleNewInventory(newInventory) {
-    setInventory(oldState => {
-      return [...oldState, newInventory];
+    setInventory(oldInventory => {
+      const updatedInventory = [...oldInventory, newInventory];
+      return sortInventory(updatedInventory);
     });
+  }
+
+  function sortInventory(inventoryData) {
+    const sortedInventory = inventoryData.sort((a, b) => a.item.id - b.item.id);
+    return sortedInventory;
   }
 
   function handleInventoryUpdate(updatedInventory) {
@@ -75,7 +81,7 @@ export default function Inventory() {
       <GridContainer>
         <Grid row>
           <Grid col={10}>
-            <h1 className="text-centered">All Inventory</h1>
+            <h1 className="text-centered">INVENTORY</h1>
           </Grid>
         </Grid>
         <Grid row>

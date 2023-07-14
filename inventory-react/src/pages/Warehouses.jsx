@@ -71,7 +71,7 @@ export default function Warehouses() {
       <GridContainer>
         <Grid row>
           <Grid col={10}>
-            <h1 className="text-centered">All Warehouses</h1>
+            <h1 className="text-centered">WAREHOUSES</h1>
           </Grid>
         </Grid>
         <Grid row>
