@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorm.inventorymanagementsolution.models.Inventory;
+import com.skillstorm.inventorymanagementsolution.models.Warehouse;
 import com.skillstorm.inventorymanagementsolution.services.InventoryService;
+import com.skillstorm.inventorymanagementsolution.services.WarehouseService;
 
 @RestController
 @RequestMapping("/inventory")
@@ -26,6 +28,9 @@ import com.skillstorm.inventorymanagementsolution.services.InventoryService;
 public class InventoryController {
     @Autowired
     InventoryService inventoryService;
+
+    @Autowired
+    WarehouseService warehouseService;
 
     @GetMapping
     public ResponseEntity<List<Inventory>> getAllInventory() {
@@ -60,59 +65,78 @@ public class InventoryController {
         return new ResponseEntity<>(totalQuantity, HttpStatus.OK);
     }
 
-    // CREATE method for inventory. Does not allow request that cause warehouse capacity to be exceeded.
+    // // Adds a new item entry and its associated warehouse to the inventory table.
+    // @PostMapping
+    // public ResponseEntity<?> createInventory(@RequestBody Inventory inventory) {
+    //     Inventory createdInventory = inventoryService.saveInventory(inventory);
+    //     return new ResponseEntity<>(createdInventory, HttpStatus.CREATED);
+    // }
+    
+    // Adds a new inventory entry with validation constraints to ensure it doesn't exceed warehouse capacity.
     @PostMapping
-    public ResponseEntity<Inventory> createInventory(@RequestBody Inventory inventory) {
-        if (inventory == null || inventory.getQuantity() < 0) {
-            return ResponseEntity.badRequest().build(); // Return a bad request if the inventory or quantity is invalid
+    public ResponseEntity<?> createInventory(@RequestBody Inventory inventory) {
+        int warehouseId = inventory.getWarehouse().getId();
+        int newInventoryQuantity = inventory.getQuantity();
+        
+        // Retrieve the maximum capacity of the warehouse
+        Warehouse warehouse = warehouseService.findWarehouseById(warehouseId);
+        int maximumCapacity = warehouse.getMaximumCapacity();
+        
+        // Calculate the total quantity of the warehouse
+        int totalQuantity = inventoryService.getTotalQuantityByWarehouseId(warehouseId);
+        
+        // Add the quantity of the newly created inventory
+        int updatedTotalQuantity = totalQuantity + newInventoryQuantity;
+        
+        // Check if the updated total quantity exceeds the maximum capacity
+        if (updatedTotalQuantity > maximumCapacity) {
+            return new ResponseEntity<>("Adding the inventory would exceed the maximum capacity of the warehouse." + maximumCapacity, HttpStatus.BAD_REQUEST);
         }
-
-        // Fetch the current total quantity of the warehouse
-        int totalQuantity = inventoryService.getTotalQuantityByWarehouseId(inventory.getWarehouse().getId());
-
-        // Get the maximum capacity of the warehouse
-        int maximumCapacity = inventory.getWarehouse().getMaximumCapacity();
-
-        // Calculate the new total quantity after adding the inventory
-        int newTotalQuantity = totalQuantity + inventory.getQuantity();
-
-        // Check if the new total quantity exceeds the maximum capacity
-        if (newTotalQuantity > maximumCapacity) {
-            return ResponseEntity.badRequest().build(); // Return a bad request if the new total quantity exceeds the maximum capacity
-        }
-
-        // Additional validation logic as needed
-
+        
+        // Save the inventory
         Inventory createdInventory = inventoryService.saveInventory(inventory);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdInventory);
+        return new ResponseEntity<>(createdInventory, HttpStatus.CREATED);
     }
 
 
-    // UPDATE method for inventory. Does not allow request that cause warehouse capacity to be exceeded.
+    // @PutMapping("/{warehouseId}/{itemId}")
+    // public ResponseEntity<?> updateInventory(@PathVariable int warehouseId, @PathVariable int itemId, @Valid @RequestBody Inventory inventory) {
+    //     Inventory existingInventory = inventoryService.findInventoryByWarehouseIdAndItemId(warehouseId, itemId);
+    //     if (existingInventory == null) {
+    //         return ResponseEntity.notFound().build();
+    //     }
+
+    //     inventory.setInventoryId(existingInventory.getInventoryId());
+    //     Inventory updatedInventory = inventoryService.saveInventory(inventory);
+    //     return new ResponseEntity<>(updatedInventory, HttpStatus.OK);
+    // }
+
+    // UPDATE with validation constraints to ensure warehouse maximum capacity is not exceeded
     @PutMapping("/{warehouseId}/{itemId}")
-    public ResponseEntity<Inventory> updateInventory(@PathVariable int warehouseId, @PathVariable int itemId, @Valid @RequestBody Inventory inventory) {
+    public ResponseEntity<?> updateInventory(@PathVariable int warehouseId, @PathVariable int itemId, @Valid @RequestBody Inventory inventory) {
         Inventory existingInventory = inventoryService.findInventoryByWarehouseIdAndItemId(warehouseId, itemId);
         if (existingInventory == null) {
             return ResponseEntity.notFound().build();
         }
-    
-        // Fetch the current total quantity of the warehouse
-        int totalQuantity = inventoryService.getTotalQuantityByWarehouseId(warehouseId);
-    
-        // Get the maximum capacity of the warehouse
-        int maximumCapacity = existingInventory.getWarehouse().getMaximumCapacity();
-    
-        // Calculate the new total quantity after updating the inventory
-        int newTotalQuantity = totalQuantity - existingInventory.getQuantity() + inventory.getQuantity();
-    
-        // Check if the new total quantity exceeds the maximum capacity
-        if (newTotalQuantity > maximumCapacity) {
-            return ResponseEntity.badRequest().build(); // Return a bad request if the new total quantity exceeds the maximum capacity
+
+        // Retrieve the maximum capacity of the warehouse
+        Warehouse warehouse = warehouseService.findWarehouseById(warehouseId);
+        int maximumCapacity = warehouse.getMaximumCapacity();
+
+        // Calculate the total quantity of the warehouse excluding the existing inventory
+        int totalQuantity = inventoryService.getTotalQuantityByWarehouseId(warehouseId) - existingInventory.getQuantity();
+
+        // Add the quantity of the updated inventory
+        int updatedTotalQuantity = totalQuantity + inventory.getQuantity();
+
+        // Check if the updated total quantity exceeds the maximum capacity
+        if (updatedTotalQuantity > maximumCapacity) {
+            return new ResponseEntity<>("Updating the inventory would exceed the maximum capacity of the warehouse." + maximumCapacity, HttpStatus.BAD_REQUEST);
         }
-    
+
         inventory.setInventoryId(existingInventory.getInventoryId());
         Inventory updatedInventory = inventoryService.saveInventory(inventory);
-        return ResponseEntity.ok(updatedInventory);
+        return new ResponseEntity<>(updatedInventory, HttpStatus.OK);
     }
 
     @DeleteMapping("/{warehouseId}/{itemId}")

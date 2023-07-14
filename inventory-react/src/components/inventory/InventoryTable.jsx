@@ -38,7 +38,7 @@ export default function InventoryTable({tableData, handleInventoryUpdate, handle
                                         Edit
                                     </ModalToggleButton>
                                     <Button onClick={() => handleDelete(inventory.warehouse.id, inventory.item.id)} 
-                                    className='bg-secondary-dark'>
+                                    outline type="button">
                                         Delete
                                     </Button>
 

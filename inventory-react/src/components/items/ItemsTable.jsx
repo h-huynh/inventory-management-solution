@@ -30,7 +30,7 @@ export default function ItemsTable({ tableData, handleItemUpdate, handleDelete }
                   <ModalToggleButton modalRef={editModalRef} opener onClick={() => handleOpenModal(item)}>
                     Edit
                   </ModalToggleButton>
-                  <Button onClick={() => handleDelete(item.id)} className='bg-secondary-dark'>
+                  <Button onClick={() => handleDelete(item.id)} outline type="button">
                     Delete
                   </Button>
                 </td>

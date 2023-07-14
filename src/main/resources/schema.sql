@@ -23,7 +23,7 @@ CREATE TABLE ITEMS (
 -- Create the Inventory table (junction table)
 CREATE TABLE INVENTORY (
   warehouse_id INTEGER REFERENCES Warehouses (warehouse_id) ON DELETE CASCADE,
-  item_id INTEGER REFERENCES Items (item_id),
+  item_id INTEGER REFERENCES Items (item_id) ON DELETE CASCADE,
   quantity INTEGER,
   PRIMARY KEY (warehouse_id, item_id)
 );

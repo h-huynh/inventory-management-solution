@@ -30,15 +30,16 @@ export default function WarehousesForm({ handleNewWarehouse, setErrorMessage}) {
         handleNewWarehouse(returnedData);
         event.target.reset();
       })
-      .catch(error => {console.error(error);
-        setErrorMessage('Error creating warehouse. Invalid input or maximum capacity must be set to at least 10.');
-         // Automatically clear the error message
-         setTimeout(() => {
-          setErrorMessage('');
-        }, 6000);
+      .catch(error => {
+        console.error(error);
+        setErrorMessage('Error adding warehouse. Capacity must be a minimum of 10.');
       });
 
       event.target.reset();
+      // Automatically clear the error message after a second
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 6000);
   
   }
 
