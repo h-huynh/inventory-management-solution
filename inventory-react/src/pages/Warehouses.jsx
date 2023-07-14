@@ -13,7 +13,8 @@ export default function Warehouses() {
     fetch(url)
       .then(data => data.json())
       .then(returnedData => {
-        setWarehouses(returnedData);
+        const sortedWarehouses = returnedData.sort((a, b) => a.id - b.id);
+        setWarehouses(sortedWarehouses);
       })
       .catch(error => console.error(error));
   }, []);

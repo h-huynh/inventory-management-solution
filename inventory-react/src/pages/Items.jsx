@@ -13,7 +13,8 @@ export default function Items() {
     fetch(url)
       .then(data => data.json())
       .then(returnedData => {
-        setItems(returnedData);
+        const sortedItems = returnedData.sort((a, b) => a.id - b.id);
+        setItems(sortedItems);
       })
       .catch(error => console.error(error));
   }, []);
@@ -24,41 +25,20 @@ export default function Items() {
     });
   }
 
-  function handleEdit(id) {
-    const updatedItems = [...items];
-    const itemToUpdate = updatedItems.find(item => item.id === id);
-    if (!itemToUpdate) {
-      console.error(`Item with ID ${id} not found.`);
-      return;
-    }
+  function handleItemUpdate(updatedItem) {
+    setItems(oldItems => {
+      // Find the index of the updated item in the items array
+      const updatedIndex = oldItems.findIndex(item => item.id === updatedItem.id);
   
-    // Prompt the user for the updated item details
-    const updatedName = prompt('Enter the updated name:', itemToUpdate.name);
-    if (updatedName === null) {
-      return; // User canceled the update
-    }
+      // If the item is found, replace it with the updated item in a new array
+      if (updatedIndex !== -1) {
+        const updatedItems = [...oldItems];
+        updatedItems[updatedIndex] = updatedItem;
+        return updatedItems;
+      }
   
-    // Update the item locally
-    itemToUpdate.name = updatedName;
-    setItems(updatedItems);
-  
-    // Send the PUT request to the server
-    fetch(url + '/item/' + id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(itemToUpdate),
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Error updating item.');
-        }
-      })
-      .catch(error => {
-        console.error(error);
-        // Handle error state or display error message to the user
-      });
+      return oldItems;
+    });
   }
 
   function handleDelete(id) {
@@ -105,8 +85,8 @@ export default function Items() {
           <Grid col>
             <ItemsTable
               tableData={items}
-              handleEdit={handleEdit}
               handleDelete={handleDelete}
+              handleItemUpdate={handleItemUpdate}
             />
           </Grid>
         </Grid>

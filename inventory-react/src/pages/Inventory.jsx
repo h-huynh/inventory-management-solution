@@ -13,7 +13,8 @@ export default function Inventory() {
     fetch(url)
       .then(data => data.json())
       .then(returnedData => {
-        setInventory(returnedData);
+        const sortedInventory = returnedData.sort((a, b) => a.item.id - b.item.id);
+        setInventory(sortedInventory);
       })
       .catch(error => console.error(error));
   }, []);
