@@ -25,9 +25,25 @@ export default function Inventory() {
     });
   }
 
-  function handleEdit(id) {
-    // TODO: implement editing functionality
+  function handleInventoryUpdate(updatedInventory) {
+    setInventory(oldInventory => {
+      // Find the index of the updated inventory in the inventory array
+      const updatedIndex = oldInventory.findIndex(inventory =>
+        inventory.warehouse.id === updatedInventory.warehouse.id &&
+        inventory.item.id === updatedInventory.item.id
+      );
+  
+      // If the inventory is found, replace it with the updated inventory in a new array
+      if (updatedIndex !== -1) {
+        const updatedInventoryList = [...oldInventory];
+        updatedInventoryList[updatedIndex] = updatedInventory;
+        return updatedInventoryList;
+      }
+  
+      return oldInventory;
+    });
   }
+
 
   function handleDelete(warehouseId, itemId) {
     const confirmDelete = window.confirm('Are you sure you want to delete this entry?');
@@ -73,8 +89,8 @@ export default function Inventory() {
           <Grid col>
             <InventoryTable
               tableData={inventory}
-              handleEdit={handleEdit}
               handleDelete={handleDelete}
+              handleInventoryUpdate={handleInventoryUpdate}
             />
           </Grid>
         </Grid>
