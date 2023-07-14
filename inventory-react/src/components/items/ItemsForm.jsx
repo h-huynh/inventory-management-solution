@@ -3,6 +3,8 @@ import { Button, Form, Label, TextInput } from "@trussworks/react-uswds";
 export default function ItemsForm({ handleNewItem }) {
   const url = 'http://localhost:8080/items';
 
+
+  //handles submit of the form
   function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
@@ -11,6 +13,7 @@ export default function ItemsForm({ handleNewItem }) {
       name: data.get('itemName'),
     };
 
+    //post to the server
     fetch(url + '/item', {
       method: 'POST',
       headers: {
@@ -20,7 +23,7 @@ export default function ItemsForm({ handleNewItem }) {
     })
       .then(data => data.json())
       .then(returnedData => {
-        handleNewItem(returnedData);
+        handleNewItem(returnedData); //handle the state change of new item
         event.target.reset();
       })
       .catch(error => console.error(error));

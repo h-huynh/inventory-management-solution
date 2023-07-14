@@ -8,13 +8,16 @@ export default function Inventory() {
 
   const [inventory, setInventory] = useState([]);
   const modalRef = useRef(null);
+
+  // this state sets the error message and displays it when changed
   const [errorMessage, setErrorMessage] = useState('');
 
+  //retrieve data
   useEffect(() => {
     fetch(url)
       .then(data => data.json())
       .then(returnedData => {
-        const sortedInventory = returnedData.sort((a, b) => a.item.id - b.item.id);
+        const sortedInventory = returnedData.sort((a, b) => a.item.id - b.item.id); //sort by item id
         setInventory(sortedInventory);
       })
       .catch(error => console.error(error));
@@ -54,7 +57,7 @@ export default function Inventory() {
     });
   }
 
-
+  // handles inventory deletes - passed as a prop to the delete button element in each row
   function handleDelete(warehouseId, itemId) {
     const confirmDelete = window.confirm('Are you sure you want to delete this entry?');
     if (!confirmDelete) {

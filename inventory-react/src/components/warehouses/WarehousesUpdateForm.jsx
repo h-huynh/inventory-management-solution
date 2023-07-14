@@ -5,10 +5,13 @@ export default function WarehousesUpdateForm({ oldWarehouse, handleWarehouseUpda
 
   const url = 'http://localhost:8080/warehouses';
 
+  // to apply changes on warehouse update
   useEffect(() => {
     handleWarehouseUpdate(oldWarehouse);
   }, [oldWarehouse]);
 
+
+  //on form submit
   function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
@@ -17,7 +20,7 @@ export default function WarehousesUpdateForm({ oldWarehouse, handleWarehouseUpda
       id: oldWarehouse.id,
       name: data.get('warehouseName'),
       location: data.get('warehouseLocation'),
-      maximumCapacity: oldWarehouse.maximumCapacity,
+      maximumCapacity: oldWarehouse.maximumCapacity, //currently does not allow for capacity expansions 
     };
 
     fetch(url + '/warehouse/' + oldWarehouse.id, {

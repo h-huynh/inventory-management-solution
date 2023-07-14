@@ -3,6 +3,7 @@ import { Button, Form, Label, TextInput } from "@trussworks/react-uswds";
 export default function WarehousesForm({ handleNewWarehouse, setErrorMessage}) {
   const url = 'http://localhost:8080/warehouses';
 
+  //on form submit
   function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
@@ -13,6 +14,7 @@ export default function WarehousesForm({ handleNewWarehouse, setErrorMessage}) {
       maximumCapacity: data.get('warehouseCapacity'),
     };
 
+    //post to the server
     fetch(url + '/warehouse', {
       method: 'POST',
       headers: {
@@ -32,7 +34,7 @@ export default function WarehousesForm({ handleNewWarehouse, setErrorMessage}) {
       })
       .catch(error => {
         console.error(error);
-        setErrorMessage('Error adding warehouse. Capacity must be a minimum of 10.');
+        setErrorMessage('Error adding warehouse. Capacity must be a minimum of 10.'); //set the error message
       });
 
       event.target.reset();

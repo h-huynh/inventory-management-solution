@@ -13,6 +13,7 @@ export default function InventoryUpdateForm({ oldInventory, handleInventoryUpdat
     event.preventDefault();
     const data = new FormData(event.target);
 
+    // the inventory structure is a bit complex, but is mostly populated by the selected inventory's old values
     const editedInventory = {
         inventoryId : {
             itemId : oldInventory.warehouse.id,

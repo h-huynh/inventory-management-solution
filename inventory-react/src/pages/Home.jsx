@@ -2,7 +2,7 @@ import { GridContainer, ProcessList, ProcessListHeading, ProcessListItem } from 
 
 export default function Home() {
     
-    
+    // documentation page - relevant instructions and information here
     return (
         <>
             <GridContainer>

@@ -2,6 +2,7 @@ import { Button, Form, Label, TextInput } from "@trussworks/react-uswds";
 export default function InventoryForm({handleNewInventory, setErrorMessage}) {
     const url = 'http://localhost:8080/inventory';
     
+    //on form submit
     function handleSubmit(event) {
 
         // preventing page refresh
@@ -25,6 +26,7 @@ export default function InventoryForm({handleNewInventory, setErrorMessage}) {
             quantity : data.get('quantity')
         }
 
+        // post to the server
         fetch(url, {
             method : 'POST',
             headers : {
@@ -51,7 +53,7 @@ export default function InventoryForm({handleNewInventory, setErrorMessage}) {
             });
 
             event.target.reset();
-            // Automatically clear the error message after a second
+            // Automatically clear the error message after a few seconds
             setTimeout(() => {
             setErrorMessage('');
             }, 6000);

@@ -12,6 +12,7 @@ export default function WarehousesTable({ tableData, handleWarehouseUpdate, hand
     setSelectedWarehouse(warehouse);
   };
 
+  // this request searches through inventory for all matching warehouse entries and sums the quantity of all items to return as an int for current storage
   useEffect(() => {
     const fetchCurrentStorage = async () => {
       setIsLoading(true);
@@ -30,7 +31,7 @@ export default function WarehousesTable({ tableData, handleWarehouseUpdate, hand
           updatedStorage[warehouseId] = data;
         });
 
-        setCurrentStorage(updatedStorage);
+        setCurrentStorage(updatedStorage); //set the current storage
       } catch (error) {
         console.error(error);
       }

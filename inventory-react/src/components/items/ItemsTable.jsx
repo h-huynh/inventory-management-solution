@@ -6,6 +6,7 @@ export default function ItemsTable({ tableData, handleItemUpdate, handleDelete }
   const editModalRef = useRef(null);
   const [selectedItem, setSelectedItem] = useState(null);
 
+  //used to track the currently selected edit button and also if it changes
   const handleOpenModal = (item) => {
     setSelectedItem(item);
   };

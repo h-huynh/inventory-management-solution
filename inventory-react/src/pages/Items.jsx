@@ -42,6 +42,7 @@ export default function Items() {
     });
   }
 
+  //handles item deletions by inputting an item id
   function handleDelete(id) {
     const confirmDelete = window.confirm('Are you sure you want to delete this item?');
     if (!confirmDelete) {

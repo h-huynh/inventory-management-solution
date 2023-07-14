@@ -5,19 +5,23 @@ export default function ItemsUpdateForm({ oldItem, handleItemUpdate }) {
 
   const url = 'http://localhost:8080/items';
 
+  //for handling changes to the item
   useEffect(() => {
     handleItemUpdate(oldItem);
   }, [oldItem]);
 
+  //on form submit
   function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
 
+    // create edited item object
     const editedItem = {
       id: oldItem.id,
       name: data.get('itemName'),
     };
 
+    //put to the server
     fetch(url + '/item/' + oldItem.id, {
       method: 'PUT',
       headers: {

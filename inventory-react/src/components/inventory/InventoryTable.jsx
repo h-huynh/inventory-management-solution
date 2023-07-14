@@ -6,6 +6,7 @@ export default function InventoryTable({tableData, handleInventoryUpdate, handle
     const editModalRef = useRef(null);
     const [selectedInventory, setSelectedInventory] = useState(null);
 
+    //tracking the currently selected inventory
     const handleOpenModal = (inventory) => {
         setSelectedInventory(inventory);
     };

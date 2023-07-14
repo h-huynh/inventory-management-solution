@@ -58,6 +58,7 @@ public class InventoryController {
         }
     }
 
+    // a method used to find the current total storage of a warehouse. Returns a ResponseEntity which contains the int value totalQuantity
     @GetMapping("/{warehouseId}/totalQuantity")
     public ResponseEntity<?> getWarehouseTotalQuantity(@PathVariable int warehouseId) {
         int totalQuantity = inventoryService.getTotalQuantityByWarehouseId(warehouseId);

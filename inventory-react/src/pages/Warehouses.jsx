@@ -20,12 +20,14 @@ export default function Warehouses() {
       .catch(error => console.error(error));
   }, []);
 
+  //updates warehouse table
   function handleNewWarehouse(newWarehouse) {
     setWarehouses(oldState => {
       return [...oldState, newWarehouse];
     });
   }
 
+  //on warehouse updates, updates table sorting
   function handleWarehouseUpdate(updatedWarehouse) {
     setWarehouses(oldWarehouses => {
       // Find the index of the updated warehouse in the warehouses array
