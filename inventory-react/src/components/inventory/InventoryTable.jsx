@@ -2,7 +2,7 @@ import { Button, Modal, ModalHeading, ModalToggleButton, Table } from "@trusswor
 import { useRef, useState } from "react";
 import InventoryUpdateForm from "./InventoryUpdateForm";
 
-export default function InventoryTable({tableData, handleInventoryUpdate, handleDelete}) {
+export default function InventoryTable({tableData, handleInventoryUpdate, handleDelete, setErrorMessage}) {
     const editModalRef = useRef(null);
     const [selectedInventory, setSelectedInventory] = useState(null);
 
@@ -52,7 +52,7 @@ export default function InventoryTable({tableData, handleInventoryUpdate, handle
             <ModalHeading>Edit Inventory Details</ModalHeading>
                 {selectedInventory && (
                     <div>
-                        <InventoryUpdateForm oldInventory={selectedInventory} handleInventoryUpdate={handleInventoryUpdate}/>
+                        <InventoryUpdateForm oldInventory={selectedInventory} handleInventoryUpdate={handleInventoryUpdate} setErrorMessage={setErrorMessage}/>
                     </div> 
                 )}
             </Modal>

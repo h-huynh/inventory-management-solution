@@ -1,7 +1,7 @@
 import { Button, Form, Label, TextInput } from "@trussworks/react-uswds";
 import { useEffect } from "react";
 
-export default function InventoryUpdateForm({ oldInventory, handleInventoryUpdate }) {
+export default function InventoryUpdateForm({ oldInventory, handleInventoryUpdate, setErrorMessage}) {
 
   const url = 'http://localhost:8080/inventory';
 
@@ -49,6 +49,15 @@ export default function InventoryUpdateForm({ oldInventory, handleInventoryUpdat
           event.target.reset();
       })
       .catch(error => console.error(error));
+
+      setErrorMessage('Error editing inventory. Invalid input or exceeded maximum warehouse capacity.');
+
+      event.target.reset();
+
+      // Automatically clear the error message after a second
+      setTimeout(() => {
+      setErrorMessage('');
+      }, 6000);
   }
 
   return (

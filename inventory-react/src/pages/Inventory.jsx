@@ -1,4 +1,4 @@
-import { GridContainer, Grid, Modal, ModalHeading, ModalToggleButton } from '@trussworks/react-uswds';
+import { GridContainer, Grid, Modal, ModalHeading, ModalToggleButton, ErrorMessage } from '@trussworks/react-uswds';
 import InventoryTable from '../components/inventory/InventoryTable';
 import InventoryForm from '../components/inventory/InventoryForm';
 import { useRef, useState, useEffect } from 'react';
@@ -8,6 +8,7 @@ export default function Inventory() {
 
   const [inventory, setInventory] = useState([]);
   const modalRef = useRef(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     fetch(url)
@@ -88,7 +89,12 @@ export default function Inventory() {
           <Grid col={2}>
             <ModalToggleButton modalRef={modalRef} opener>
               New Inventory
-            </ModalToggleButton>
+            </ModalToggleButton>          
+          </Grid>
+          <Grid col={4}>
+            {errorMessage && (
+                <ErrorMessage>{errorMessage}</ErrorMessage>
+            )}
           </Grid>
         </Grid> 
         <Grid row>
@@ -97,6 +103,7 @@ export default function Inventory() {
               tableData={inventory}
               handleDelete={handleDelete}
               handleInventoryUpdate={handleInventoryUpdate}
+              setErrorMessage={setErrorMessage}
             />
           </Grid>
         </Grid>
@@ -104,7 +111,9 @@ export default function Inventory() {
 
       <Modal id="inventory-form-modal" ref={modalRef}>
         <ModalHeading>Enter New Inventory Details</ModalHeading>
-        <InventoryForm handleNewInventory={handleNewInventory}/>
+        <InventoryForm 
+          handleNewInventory={handleNewInventory}
+          setErrorMessage={setErrorMessage}/>
       </Modal>
     </>
   );
