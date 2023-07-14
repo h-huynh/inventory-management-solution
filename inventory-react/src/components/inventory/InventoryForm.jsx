@@ -32,7 +32,12 @@ export default function InventoryForm({handleNewInventory}) {
             },
             body : JSON.stringify(newInventory)
         })
-            .then(data => data.json())
+            .then(response => {
+                if (!response.ok) {
+                    return Promise.reject(new Error('DATA VALIDATION: invalid data sent to server'));
+                }
+                return response.json();
+            })
             .then(returnedData => {
                 // calling handleNewInventory from Inventory.jsx to add the inventory to the table
                 handleNewInventory(returnedData);

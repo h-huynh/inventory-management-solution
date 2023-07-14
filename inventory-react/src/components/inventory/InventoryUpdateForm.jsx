@@ -38,10 +38,15 @@ export default function InventoryUpdateForm({ oldInventory, handleInventoryUpdat
       },
       body: JSON.stringify(editedInventory),
     })
-      .then(response => response.json())
+      .then(response => {
+          if (!response.ok) {
+              return Promise.reject(new Error('DATA VALIDATION: invalid data sent to server'));
+          }
+          return response.json();
+      })
       .then(returnedData => {
-        handleInventoryUpdate(returnedData); // Call the prop to update the state in the parent component
-        event.target.reset();
+          handleInventoryUpdate(returnedData); // Call the prop to update the state in the parent component
+          event.target.reset();
       })
       .catch(error => console.error(error));
   }
