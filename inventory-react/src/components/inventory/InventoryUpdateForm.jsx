@@ -48,16 +48,16 @@ export default function InventoryUpdateForm({ oldInventory, handleInventoryUpdat
           handleInventoryUpdate(returnedData); // Call the prop to update the state in the parent component
           event.target.reset();
       })
-      .catch(error => console.error(error));
+      .catch(error => {console.error(error);
+          setErrorMessage('Error editing inventory. Invalid input or exceeded maximum warehouse capacity.');
 
-      setErrorMessage('Error editing inventory. Invalid input or exceeded maximum warehouse capacity.');
+          // Automatically clear the error message
+          setTimeout(() => {
+            setErrorMessage('');
+          }, 6000);
+      });
 
       event.target.reset();
-
-      // Automatically clear the error message after a second
-      setTimeout(() => {
-      setErrorMessage('');
-      }, 6000);
   }
 
   return (
