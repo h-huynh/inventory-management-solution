@@ -68,7 +68,10 @@ export default function WarehousesTable({ tableData, handleWarehouseUpdate, hand
                   <ModalToggleButton modalRef={editModalRef} opener onClick={() => handleOpenModal(warehouse)}>
                     Edit
                   </ModalToggleButton>
-                  <Button onClick={() => handleDelete(warehouse.id)} outline type="button">
+                </td>
+
+                <td>
+                  <Button onClick={() => handleDelete(warehouse.id)} className="bg-secondary-darker" type="button">
                     Delete
                   </Button>
                 </td>

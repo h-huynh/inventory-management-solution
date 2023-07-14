@@ -37,11 +37,12 @@ export default function InventoryTable({tableData, handleInventoryUpdate, handle
                                     <ModalToggleButton modalRef={editModalRef} opener onClick={() => handleOpenModal(inventory)}>
                                         Edit
                                     </ModalToggleButton>
+                                </td>
+                                <td>
                                     <Button onClick={() => handleDelete(inventory.warehouse.id, inventory.item.id)} 
-                                    outline type="button">
+                                    className="bg-secondary-darker" type="button">
                                         Delete
                                     </Button>
-
                                 </td>
                             </tr>
                         );
