@@ -1,6 +1,6 @@
 import { Button, Form, Label, TextInput } from "@trussworks/react-uswds";
 
-export default function WarehousesForm({ handleNewWarehouse }) {
+export default function WarehousesForm({ handleNewWarehouse, setErrorMessage}) {
   const url = 'http://localhost:8080/warehouses';
 
   function handleSubmit(event) {
@@ -20,12 +20,25 @@ export default function WarehousesForm({ handleNewWarehouse }) {
       },
       body: JSON.stringify(newWarehouse),
     })
-      .then(data => data.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error creating warehouse.');
+        }
+        return response.json();
+      })
       .then(returnedData => {
         handleNewWarehouse(returnedData);
         event.target.reset();
       })
       .catch(error => console.error(error));
+      setErrorMessage('Error creating warehouse. Invalid input or warehouse capacity did not meet 10 minumum.');
+
+      event.target.reset();
+      // Automatically clear the error message after a second
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 6000);
+  
   }
 
   return (

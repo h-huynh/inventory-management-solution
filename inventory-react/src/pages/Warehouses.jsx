@@ -1,4 +1,4 @@
-import { GridContainer, Grid, Modal, ModalHeading, ModalToggleButton } from '@trussworks/react-uswds';
+import { GridContainer, Grid, Modal, ModalHeading, ModalToggleButton, ErrorMessage } from '@trussworks/react-uswds';
 import WarehousesTable from '../components/warehouses/WarehousesTable';
 import WarehousesForm from '../components/warehouses/WarehousesForm';
 import { useRef, useState, useEffect } from 'react';
@@ -8,6 +8,7 @@ export default function Warehouses() {
 
   const [warehouses, setWarehouses] = useState([]);
   const modalRef = useRef(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     fetch(url)
@@ -80,6 +81,11 @@ export default function Warehouses() {
               New Warehouse
             </ModalToggleButton>
           </Grid>
+          <Grid col={4}>
+            {errorMessage && (
+                <ErrorMessage>{errorMessage}</ErrorMessage>
+            )}
+          </Grid>
         </Grid> 
         <Grid row>
           <Grid col>
@@ -94,7 +100,9 @@ export default function Warehouses() {
 
       <Modal id="warehouse-form-modal" ref={modalRef}>
         <ModalHeading>Enter New Warehouse Details</ModalHeading>
-        <WarehousesForm handleNewWarehouse={handleNewWarehouse} />
+        <WarehousesForm 
+          handleNewWarehouse={handleNewWarehouse}
+          setErrorMessage={setErrorMessage} />
       </Modal>
     </>
   );
