@@ -13,7 +13,7 @@ export default function Items() {
     fetch(url)
       .then(data => data.json())
       .then(returnedData => {
-        const sortedItems = returnedData.sort((a, b) => a.id - b.id);
+        const sortedItems = returnedData.sort((a, b) => a.id - b.id); // sort by item ids smallest -> largest
         setItems(sortedItems);
       })
       .catch(error => console.error(error));
@@ -25,6 +25,7 @@ export default function Items() {
     });
   }
 
+  //maintains the position of the item in the array
   function handleItemUpdate(updatedItem) {
     setItems(oldItems => {
       // Find the index of the updated item in the items array

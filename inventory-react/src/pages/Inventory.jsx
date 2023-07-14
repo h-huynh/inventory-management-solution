@@ -20,6 +20,7 @@ export default function Inventory() {
       .catch(error => console.error(error));
   }, []);
 
+  //update the state of the inventory
   function handleNewInventory(newInventory) {
     setInventory(oldInventory => {
       const updatedInventory = [...oldInventory, newInventory];
@@ -27,11 +28,13 @@ export default function Inventory() {
     });
   }
 
+  //sorts the inventory data by item id. --> if need to, can be swapped to something like warehouse id
   function sortInventory(inventoryData) {
     const sortedInventory = inventoryData.sort((a, b) => a.item.id - b.item.id);
     return sortedInventory;
   }
 
+  //changes the state on inventory update
   function handleInventoryUpdate(updatedInventory) {
     setInventory(oldInventory => {
       // Find the index of the updated inventory in the inventory array

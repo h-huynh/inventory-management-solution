@@ -139,6 +139,7 @@ public class InventoryController {
         return new ResponseEntity<>(updatedInventory, HttpStatus.OK);
     }
 
+    // DELETE an inventory with a specified warehouseId/itemId
     @DeleteMapping("/{warehouseId}/{itemId}")
     public ResponseEntity<Void> deleteInventory(@PathVariable int warehouseId, @PathVariable int itemId) {
         Inventory existingInventory = inventoryService.findInventoryByWarehouseIdAndItemId(warehouseId, itemId);
