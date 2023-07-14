@@ -16,7 +16,7 @@ export default function WarehousesUpdateForm({ oldWarehouse, handleWarehouseUpda
     const editedWarehouse = {
       id: oldWarehouse.id,
       name: data.get('warehouseName'),
-      location: oldWarehouse.location,
+      location: data.get('warehouseLocation'),
       maximumCapacity: oldWarehouse.maximumCapacity,
     };
 
@@ -62,8 +62,6 @@ export default function WarehousesUpdateForm({ oldWarehouse, handleWarehouseUpda
           name="warehouseLocation"
           type="text"
           defaultValue={oldWarehouse.location}
-          readOnly // Make the field read-only
-          className="bg-disabled" // Apply the gray color class
         />
 
         <Label htmlFor="warehouse-capacity-input">Warehouse Maximum Capacity</Label>
