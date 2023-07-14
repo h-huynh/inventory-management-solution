@@ -71,7 +71,7 @@ export default function Items() {
       <GridContainer>
         <Grid row>
           <Grid col={10}>
-            <h1 className="text-centered">All Items</h1>
+            <h1 className="text-centered">ITEMS CATALOG</h1>
           </Grid>
         </Grid>
         <Grid row>

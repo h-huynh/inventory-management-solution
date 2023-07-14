@@ -25,7 +25,20 @@ export default function Warehouses() {
     });
   }
 
-  function handleEdit(id) {
+  function handleWarehouseUpdate(updatedWarehouse) {
+    setWarehouses(oldWarehouses => {
+      // Find the index of the updated warehouse in the warehouses array
+      const updatedIndex = oldWarehouses.findIndex(warehouse => warehouse.id === updatedWarehouse.id);
+  
+      // If the warehouse is found, replace it with the updated warehouse in a new array
+      if (updatedIndex !== -1) {
+        const updatedWarehouses = [...oldWarehouses];
+        updatedWarehouses[updatedIndex] = updatedWarehouse;
+        return updatedWarehouses;
+      }
+  
+      return oldWarehouses;
+    });
   }
 
   function handleDelete(id) {
@@ -72,8 +85,8 @@ export default function Warehouses() {
           <Grid col>
             <WarehousesTable
               tableData={warehouses}
-              handleEdit={handleEdit}
               handleDelete={handleDelete}
+              handleWarehouseUpdate={handleWarehouseUpdate}
             />
           </Grid>
         </Grid>

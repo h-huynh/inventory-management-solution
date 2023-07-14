@@ -17,6 +17,7 @@ export default function ItemsTable({ tableData, handleItemUpdate, handleDelete }
           <tr>
             <th>ID</th>
             <th>Name</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

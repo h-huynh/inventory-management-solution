@@ -1,7 +1,15 @@
-import { Table, Button } from "@trussworks/react-uswds";
+import { Table, Button, Modal, ModalHeading, ModalToggleButton } from "@trussworks/react-uswds";
+import { useRef, useState } from "react";
+import WarehousesUpdateForm from "./WarehousesUpdateForm";
 
-export default function WarehousesTable({tableData,handleEdit,handleDelete}) {
-      
+export default function WarehousesTable({tableData,handleWarehouseUpdate,handleDelete}) {
+    const editModalRef = useRef(null);
+    const [selectedWarehouse, setSelectedWarehouse] =  useState(null);
+    
+    const handleOpenModal = (warehouse) => {
+        setSelectedWarehouse(warehouse);
+    };
+
     return(
         <>
           <Table striped fullWidth className="bg-primary-lighter">
@@ -24,9 +32,9 @@ export default function WarehousesTable({tableData,handleEdit,handleDelete}) {
                                 <td>filler</td>
                                 <td>{warehouse.maximumCapacity}</td>
                                 <td>
-                                    <Button onClick={() => handleEdit(warehouse.id)} outline type="button">
+                                    <ModalToggleButton modalRef={editModalRef} opener onClick={() => handleOpenModal(warehouse)}>
                                         Edit
-                                    </Button>
+                                    </ModalToggleButton>
                                     <Button onClick={() => handleDelete(warehouse.id)} outline type="button">
                                         Delete
                                     </Button>
@@ -36,6 +44,14 @@ export default function WarehousesTable({tableData,handleEdit,handleDelete}) {
                     })}
                 </tbody>
             </Table>
+            <Modal id="edit-warehouse-form-modal" ref={editModalRef}>
+            <ModalHeading>Edit Warehouse Details</ModalHeading>
+                {selectedWarehouse && (
+                    <div>
+                        <WarehousesUpdateForm oldWarehouse={selectedWarehouse} handleWarehouseUpdate={handleWarehouseUpdate}/>
+                    </div> 
+                )}
+            </Modal>
         </>
     );
 }

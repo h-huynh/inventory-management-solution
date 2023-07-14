@@ -43,6 +43,7 @@ export default function ItemsUpdateForm({ oldItem, handleItemUpdate }) {
           type="text"
           defaultValue={oldItem.id}
           readOnly // Make the field read-only
+          className="bg-disabled" // Apply the gray color class
         />
 
         <Label htmlFor="item-name-input">Item Name</Label>
