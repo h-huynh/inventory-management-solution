@@ -33,7 +33,7 @@ export default function Home() {
                             <br/>
 
                             When creating new inventory objects, you must input a valid item ID and warehouse ID along with a quantity
-                            that will cause the current storage of a warehouse to exceed maximum capacity. Edited quantities must also
+                            that will not cause the current storage of a warehouse to exceed maximum capacity. Edited quantities must also
                             not cause the capacity to be exceeded.
                         </p>
                     </ProcessListItem>
